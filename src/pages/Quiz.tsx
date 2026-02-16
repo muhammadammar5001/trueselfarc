@@ -33,6 +33,7 @@ const Quiz = () => {
     "bg-secondary text-secondary-foreground",
     "bg-doodle-green text-primary-foreground",
     "bg-doodle-orange text-primary-foreground",
+    "bg-accent text-accent-foreground",
   ];
 
   return (
@@ -62,7 +63,7 @@ const Quiz = () => {
             transition={{ duration: 0.3 }}
           >
             <div className="doodle-card p-6 sm:p-8 mb-6">
-              <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground leading-snug">
+             <h2 className="font-display text-base sm:text-lg font-bold text-foreground leading-snug">
                 {q.text}
               </h2>
             </div>
@@ -74,7 +75,7 @@ const Quiz = () => {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => handleAnswer(opt.scores)}
-                  className={`doodle-button w-full text-left px-5 py-4 text-base sm:text-lg font-bold rounded-lg ${colors[i]}`}
+                  className={`doodle-button w-full text-left px-4 py-3 text-xs sm:text-sm font-bold rounded-lg ${colors[i]}`}
                 >
                   {String.fromCharCode(65 + i)}. {opt.label}
                 </motion.button>
