@@ -52,7 +52,7 @@ const Index = () => {
 
         <DoodleZigzag className="w-48 mx-auto text-primary mb-6" />
 
-        <p className="text-lg text-muted-foreground font-semibold mb-2">To find your personality Please don't be fake.really are.
+        <p className="text-lg text-muted-foreground font-semibold mb-2 text-center">To find your personality Please don't be fake.
           <span className="squiggle-underline">really</span> are.
         </p>
         <p className="text-sm text-muted-foreground mb-10">
