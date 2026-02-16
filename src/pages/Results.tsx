@@ -18,7 +18,12 @@ const Results = () => {
 
   const [phase, setPhase] = useState<Phase>("calculating");
   const [aiText, setAiText] = useState<string>("");
-  const [aiLoading, setAiLoading] = useState(false);
+  const [aiLoading, setAiLoading] = useState(true);
+
+  // Split AI text into teaser (first ~12 words) and hidden rest
+  const words = aiText.split(" ");
+  const teaserText = words.slice(0, 12).join(" ");
+  const hiddenText = words.slice(12).join(" ");
 
   useEffect(() => {
     if (!location.state?.scores) {
@@ -26,32 +31,45 @@ const Results = () => {
     }
   }, [location.state, navigate]);
 
+  // Fetch AI text immediately during calculating phase
+  useEffect(() => {
+    const fetchAiText = async () => {
+      setAiLoading(true);
+      try {
+        const { data, error } = await supabase.functions.invoke("generate-result", {
+          body: { archetype, scores },
+        });
+        if (error) throw error;
+        setAiText(data?.text || "");
+      } catch (err) {
+        console.error("AI generation failed:", err);
+        setAiText("Your personality profile is truly one of a kind. Take a moment to reflect on what makes you, you.");
+      } finally {
+        setAiLoading(false);
+      }
+    };
+    fetchAiText();
+  }, []);
+
   useEffect(() => {
     if (phase === "calculating") {
-      const timer = setTimeout(() => setPhase("paywall"), 2500);
+      // Wait for both minimum time and AI response
+      const minTime = new Promise(r => setTimeout(r, 2500));
+      const waitForAi = new Promise<void>(r => {
+        if (!aiLoading) { r(); return; }
+        const interval = setInterval(() => {
+          // This will re-check via closure
+        }, 100);
+        const timeout = setTimeout(() => { clearInterval(interval); r(); }, 8000);
+        return () => { clearInterval(interval); clearTimeout(timeout); };
+      });
+      const timer = setTimeout(() => setPhase("paywall"), aiLoading ? 4000 : 2500);
       return () => clearTimeout(timer);
     }
-  }, [phase]);
-
-  const fetchAiText = async () => {
-    setAiLoading(true);
-    try {
-      const { data, error } = await supabase.functions.invoke("generate-result", {
-        body: { archetype, scores },
-      });
-      if (error) throw error;
-      setAiText(data?.text || "");
-    } catch (err) {
-      console.error("AI generation failed:", err);
-      setAiText("Your personality profile is truly one of a kind. Take a moment to reflect on what makes you, you.");
-    } finally {
-      setAiLoading(false);
-    }
-  };
+  }, [phase, aiLoading]);
 
   const handleUnlock = () => {
     setPhase("result");
-    fetchAiText();
   };
 
   const handleShare = async () => {
@@ -148,22 +166,29 @@ const Results = () => {
                 </p>
               </div>
 
-              {/* Free hook sentence + blurred preview */}
+              {/* AI teaser: real first words visible, rest blurred */}
               <div className="relative mb-6 overflow-hidden rounded-lg">
                 <div className="p-4 bg-muted/50 space-y-2">
-                  <p className="text-sm text-foreground font-semibold leading-relaxed">
-                    You have the mind of a strategist, but your{" "}
-                  </p>
-                  <div className="blur-md select-none pointer-events-none space-y-2">
-                    <p className="text-sm text-foreground font-semibold leading-relaxed">
-                      heart is currently winning the battle. Your emotional depth shapes every decision you make...
-                    </p>
-                    <div className="h-3 bg-foreground/20 rounded w-full" />
-                    <div className="h-3 bg-foreground/20 rounded w-4/5" />
-                    <div className="h-4 bg-primary/30 rounded w-1/2 mt-3" />
-                    <div className="h-3 bg-foreground/20 rounded w-full" />
-                    <div className="h-3 bg-foreground/20 rounded w-2/3" />
-                  </div>
+                  {aiLoading ? (
+                    <motion.p
+                      animate={{ opacity: [0.3, 1, 0.3] }}
+                      transition={{ repeat: Infinity, duration: 1.5 }}
+                      className="text-sm text-foreground font-semibold"
+                    >
+                      Crafting your personalized insight...
+                    </motion.p>
+                  ) : (
+                    <>
+                      <p className="text-sm text-foreground font-semibold leading-relaxed">
+                        {teaserText}{" "}
+                      </p>
+                      <div className="blur-md select-none pointer-events-none space-y-2">
+                        <p className="text-sm text-foreground font-semibold leading-relaxed">
+                          {hiddenText || "...unlock to discover the rest of your personalized insight."}
+                        </p>
+                      </div>
+                    </>
+                  )}
                 </div>
                 <div className="absolute inset-0 top-12 bg-gradient-to-b from-transparent via-transparent to-card" />
               </div>
