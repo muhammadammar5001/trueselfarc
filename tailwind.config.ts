@@ -16,6 +16,7 @@ export default {
       fontFamily: {
         sans: ["Nunito", "sans-serif"],
         display: ["Baloo 2", "cursive"],
+        serif: ["Playfair Display", "serif"],
       },
       colors: {
         border: "hsl(var(--border))",
