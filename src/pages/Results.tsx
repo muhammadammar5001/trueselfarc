@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import html2canvas from "html2canvas";
+import { supabase } from "@/integrations/supabase/client";
 import { getArchetype, VARIABLES } from "@/lib/quizData";
 import ResultCard from "@/components/ResultCard";
 
@@ -16,6 +17,8 @@ const Results = () => {
   const cardRef = useRef<HTMLDivElement>(null);
 
   const [phase, setPhase] = useState<Phase>("calculating");
+  const [aiText, setAiText] = useState<string>("");
+  const [aiLoading, setAiLoading] = useState(false);
 
   useEffect(() => {
     if (!location.state?.scores) {
@@ -30,9 +33,25 @@ const Results = () => {
     }
   }, [phase]);
 
+  const fetchAiText = async () => {
+    setAiLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("generate-result", {
+        body: { archetype, scores },
+      });
+      if (error) throw error;
+      setAiText(data?.text || "");
+    } catch (err) {
+      console.error("AI generation failed:", err);
+      setAiText("Your personality profile is truly one of a kind. Take a moment to reflect on what makes you, you.");
+    } finally {
+      setAiLoading(false);
+    }
+  };
+
   const handleUnlock = () => {
-    // Mock payment
     setPhase("result");
+    fetchAiText();
   };
 
   const handleShare = async () => {
@@ -44,7 +63,6 @@ const Results = () => {
       });
       const dataUrl = canvas.toDataURL("image/png");
 
-      // Try native share (mobile), else download
       if (navigator.share && navigator.canShare) {
         const blob = await (await fetch(dataUrl)).blob();
         const file = new File([blob], "trueself-result.png", { type: "image/png" });
@@ -58,7 +76,6 @@ const Results = () => {
         }
       }
 
-      // Fallback: download
       const link = document.createElement("a");
       link.download = "trueself-result.png";
       link.href = dataUrl;
@@ -181,6 +198,23 @@ const Results = () => {
             className="w-full max-w-sm"
           >
             <ResultCard ref={cardRef} archetype={archetype} scores={scores} />
+
+            {/* AI-generated roast & cheer */}
+            <div className="doodle-card p-5 mt-4 bg-card">
+              <h3 className="font-bold text-foreground text-sm mb-2">Your Roast & Cheer 🔥</h3>
+              {aiLoading ? (
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <motion.span
+                    animate={{ opacity: [0.3, 1, 0.3] }}
+                    transition={{ repeat: Infinity, duration: 1.5 }}
+                  >
+                    Generating your personalized insight...
+                  </motion.span>
+                </div>
+              ) : (
+                <p className="text-sm text-foreground leading-relaxed">{aiText}</p>
+              )}
+            </div>
 
             <div className="mt-6 space-y-3">
               <motion.button
