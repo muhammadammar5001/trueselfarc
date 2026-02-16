@@ -69,11 +69,11 @@ const Quiz = () => {
 
         {/* Question */}
         {/* Phase Header */}
-        {q.phase && (
-          <div className="mb-4 text-xs font-bold uppercase tracking-widest text-muted-foreground">
-            {phases[q.phase] || q.phase}
-          </div>
-        )}
+         {q.phase && (
+           <div className="mb-4 text-xs font-bold uppercase tracking-widest text-secondary">
+             {phases[q.phase] || q.phase}
+           </div>
+         )}
 
         <AnimatePresence mode="wait">
           <motion.div
@@ -83,8 +83,8 @@ const Quiz = () => {
             exit={{ opacity: 0, x: -40 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="doodle-card p-6 sm:p-8 mb-6 border-secondary">
-             <h2 className="font-display text-base sm:text-lg font-bold text-secondary leading-snug">
+            <div className="doodle-card p-6 sm:p-8 mb-6 border-secondary bg-secondary">
+             <h2 className="font-display text-base sm:text-lg font-bold text-primary-foreground leading-snug">
                 {q.text}
               </h2>
             </div>
@@ -96,7 +96,7 @@ const Quiz = () => {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => handleAnswer(opt.scores)}
-                  className="doodle-button w-full text-left px-4 py-3 text-xs sm:text-sm font-bold rounded-lg bg-card text-foreground hover:bg-muted"
+                  className="doodle-button w-full text-left px-4 py-3 text-xs sm:text-sm font-bold rounded-lg bg-card text-foreground hover:bg-secondary/80 hover:text-primary-foreground"
                 >
                   {String.fromCharCode(65 + i)}. {opt.label}
                 </motion.button>
