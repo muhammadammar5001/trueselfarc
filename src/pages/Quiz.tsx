@@ -28,13 +28,12 @@ const Quiz = () => {
     }
   };
 
-  const colors = [
-    "bg-primary text-primary-foreground",
-    "bg-secondary text-secondary-foreground",
-    "bg-doodle-green text-primary-foreground",
-    "bg-doodle-orange text-primary-foreground",
-    "bg-accent text-accent-foreground",
-  ];
+  const phases: Record<string, string> = {
+    "The Scenarios": "Phase 1: The Scenarios",
+    "The Inner World": "Phase 2: The Inner World",
+    "The Hard Choices": "Phase 3: The Hard Choices",
+    "Abstract & Synthesis": "Phase 4: Abstract & Synthesis",
+  };
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-background px-4 py-8">
@@ -54,6 +53,13 @@ const Quiz = () => {
         </div>
 
         {/* Question */}
+        {/* Phase Header */}
+        {q.phase && (
+          <div className="mb-4 text-xs font-bold uppercase tracking-widest text-muted-foreground">
+            {phases[q.phase] || q.phase}
+          </div>
+        )}
+
         <AnimatePresence mode="wait">
           <motion.div
             key={q.id}
@@ -75,7 +81,7 @@ const Quiz = () => {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => handleAnswer(opt.scores)}
-                  className={`doodle-button w-full text-left px-4 py-3 text-xs sm:text-sm font-bold rounded-lg ${colors[i]}`}
+                  className="doodle-button w-full text-left px-4 py-3 text-xs sm:text-sm font-bold rounded-lg bg-card text-foreground hover:bg-muted"
                 >
                   {String.fromCharCode(65 + i)}. {opt.label}
                 </motion.button>
