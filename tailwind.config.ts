@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Space Grotesk", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"],
+        sans: ["Nunito", "sans-serif"],
+        display: ["Baloo 2", "cursive"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -50,6 +50,11 @@ export default {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+        },
+        doodle: {
+          green: "hsl(var(--doodle-green))",
+          purple: "hsl(var(--doodle-purple))",
+          orange: "hsl(var(--doodle-orange))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
