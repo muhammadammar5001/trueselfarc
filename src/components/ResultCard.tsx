@@ -6,17 +6,28 @@ interface ResultCardProps {
   scores: Record<string, number>;
 }
 
-const barColors: Record<string, string> = {
-  CS: "bg-secondary",
-  ED: "bg-doodle-purple",
-  SE: "bg-doodle-green",
-  RO: "bg-doodle-orange",
-  LS: "bg-primary",
-};
+function getRarityTier(rarity: string): { color: string; label: string } {
+  const match = rarity.match(/(\d+)/);
+  const pct = match ? parseInt(match[1]) : 50;
+  if (pct <= 3) return { color: "bg-rarity-elite text-white", label: rarity };
+  if (pct <= 10) return { color: "bg-rarity-distinguished text-foreground", label: rarity };
+  return { color: "bg-rarity-noteworthy text-foreground", label: rarity };
+}
+
+function getBarColor(percentage: number): string {
+  if (percentage >= 80) return "bg-secondary";
+  if (percentage >= 60) return "bg-secondary/80";
+  if (percentage >= 40) return "bg-secondary/60";
+  if (percentage >= 20) return "bg-secondary/40";
+  return "bg-secondary/25";
+}
 
 const ResultCard = forwardRef<HTMLDivElement, ResultCardProps>(
   ({ archetype, scores }, ref) => {
-    const maxScore = Math.max(...Object.values(scores), 1);
+    // Calculate max possible score for percentage conversion
+    // Each question can give max ~3 points per variable, 20 questions
+    const maxPossible = Math.max(...Object.values(scores), 1);
+    const rarityTier = getRarityTier(archetype.rarity);
 
     return (
       <div
@@ -26,7 +37,7 @@ const ResultCard = forwardRef<HTMLDivElement, ResultCardProps>(
         {/* Header */}
         <div className="text-center mb-5">
           <div className="text-5xl mb-2">{archetype.emoji}</div>
-          <h2 className="font-serif text-3xl font-extrabold text-foreground leading-tight italic">
+          <h2 className="text-3xl font-extrabold text-foreground leading-tight">
             {archetype.name}
           </h2>
           <p className="text-sm text-muted-foreground mt-2 font-semibold">
@@ -34,29 +45,36 @@ const ResultCard = forwardRef<HTMLDivElement, ResultCardProps>(
           </p>
         </div>
 
-        {/* Virality badge */}
-        <div className="doodle-border-sketch text-center py-3 px-4 mb-5 bg-accent/30">
-          <p className="font-display text-lg font-bold text-foreground">
-            ✨ You are rare: <span className="text-primary">{archetype.rarity}</span>
+        {/* Virality badge with rarity-based color */}
+        <div className="doodle-border-sketch text-center py-3 px-4 mb-5">
+          <p className="text-lg font-bold text-foreground">
+            ✨ You are rare:{" "}
+            <span className={`inline-block px-3 py-0.5 rounded-full text-sm font-bold ${rarityTier.color}`}>
+              {archetype.rarity}
+            </span>
           </p>
         </div>
 
-        {/* Score bars */}
+        {/* Score bars as percentages */}
         <div className="space-y-3">
-          {VARIABLES.map((v) => (
-            <div key={v}>
-              <div className="flex justify-between text-xs font-bold text-foreground mb-1">
-                <span>{VARIABLE_LABELS[v] || v}</span>
-                <span>{scores[v] || 0}</span>
+          {VARIABLES.map((v) => {
+            const raw = scores[v] || 0;
+            const percentage = Math.round((raw / maxPossible) * 100);
+            return (
+              <div key={v}>
+                <div className="flex justify-between text-xs font-bold text-foreground mb-1">
+                  <span>{VARIABLE_LABELS[v] || v}</span>
+                  <span>{percentage}%</span>
+                </div>
+                <div className="w-full h-4 rounded-full border-2 border-foreground bg-muted overflow-hidden">
+                  <div
+                    className={`h-full rounded-full transition-all ${getBarColor(percentage)}`}
+                    style={{ width: `${percentage}%` }}
+                  />
+                </div>
               </div>
-              <div className="w-full h-4 rounded-full border-2 border-foreground bg-muted overflow-hidden">
-                <div
-                  className={`h-full rounded-full ${barColors[v]}`}
-                  style={{ width: `${((scores[v] || 0) / maxScore) * 100}%` }}
-                />
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Branding */}

@@ -15,8 +15,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ["Nunito", "sans-serif"],
-        display: ["Baloo 2", "cursive"],
-        serif: ["Playfair Display", "serif"],
+        display: ["Nunito", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -56,6 +55,11 @@ export default {
           green: "hsl(var(--doodle-green))",
           purple: "hsl(var(--doodle-purple))",
           orange: "hsl(var(--doodle-orange))",
+        },
+        rarity: {
+          elite: "hsl(var(--rarity-elite))",
+          distinguished: "hsl(var(--rarity-distinguished))",
+          noteworthy: "hsl(var(--rarity-noteworthy))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
