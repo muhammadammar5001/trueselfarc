@@ -68,7 +68,7 @@ const Index = () => {
           ✏️ Start Test
         </motion.button>
 
-        <p className="mt-8 text-xs bg-inherit text-center font-serif font-bold text-doodle-green">
+        <p className="mt-8 text-xs bg-inherit text-center font-bold text-doodle-green">
           Takes about 4 minutes • 100% anonymous
         </p>
       </motion.div>

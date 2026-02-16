@@ -123,7 +123,7 @@ const Results = () => {
               {/* Teaser preview */}
               <div className="text-center mb-4">
                 <div className="text-5xl mb-2">{archetype.emoji}</div>
-                <h2 className="font-serif text-3xl font-bold text-foreground italic leading-tight">
+                <h2 className="text-3xl font-bold text-foreground leading-tight">
                   "{archetype.name}"
                 </h2>
                 <p className="text-sm text-muted-foreground mt-2 font-semibold">
@@ -131,17 +131,24 @@ const Results = () => {
                 </p>
               </div>
 
-              {/* Blurred preview */}
+              {/* Free hook sentence + blurred preview */}
               <div className="relative mb-6 overflow-hidden rounded-lg">
-                <div className="blur-md select-none pointer-events-none p-4 bg-muted/50 space-y-2">
-                  <div className="h-3 bg-foreground/20 rounded w-full" />
-                  <div className="h-3 bg-foreground/20 rounded w-4/5" />
-                  <div className="h-3 bg-foreground/20 rounded w-3/4" />
-                  <div className="h-4 bg-primary/30 rounded w-1/2 mt-3" />
-                  <div className="h-3 bg-foreground/20 rounded w-full" />
-                  <div className="h-3 bg-foreground/20 rounded w-2/3" />
+                <div className="p-4 bg-muted/50 space-y-2">
+                  <p className="text-sm text-foreground font-semibold leading-relaxed">
+                    You have the mind of a strategist, but your{" "}
+                  </p>
+                  <div className="blur-md select-none pointer-events-none space-y-2">
+                    <p className="text-sm text-foreground font-semibold leading-relaxed">
+                      heart is currently winning the battle. Your emotional depth shapes every decision you make...
+                    </p>
+                    <div className="h-3 bg-foreground/20 rounded w-full" />
+                    <div className="h-3 bg-foreground/20 rounded w-4/5" />
+                    <div className="h-4 bg-primary/30 rounded w-1/2 mt-3" />
+                    <div className="h-3 bg-foreground/20 rounded w-full" />
+                    <div className="h-3 bg-foreground/20 rounded w-2/3" />
+                  </div>
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-card" />
+                <div className="absolute inset-0 top-12 bg-gradient-to-b from-transparent via-transparent to-card" />
               </div>
 
               <div className="text-center">
