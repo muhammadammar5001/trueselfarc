@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { VARIABLES, type Archetype } from "@/lib/quizData";
+import { VARIABLES, VARIABLE_LABELS, type Archetype } from "@/lib/quizData";
 
 interface ResultCardProps {
   archetype: Archetype;
@@ -7,11 +7,11 @@ interface ResultCardProps {
 }
 
 const barColors: Record<string, string> = {
-  "Control": "bg-secondary",
-  "Emotional Depth": "bg-doodle-purple",
-  "Social": "bg-doodle-green",
-  "Risk": "bg-doodle-orange",
-  "Sacrifice": "bg-primary",
+  CS: "bg-secondary",
+  ED: "bg-doodle-purple",
+  SE: "bg-doodle-green",
+  RO: "bg-doodle-orange",
+  LS: "bg-primary",
 };
 
 const ResultCard = forwardRef<HTMLDivElement, ResultCardProps>(
@@ -46,7 +46,7 @@ const ResultCard = forwardRef<HTMLDivElement, ResultCardProps>(
           {VARIABLES.map((v) => (
             <div key={v}>
               <div className="flex justify-between text-xs font-bold text-foreground mb-1">
-                <span>{v}</span>
+                <span>{VARIABLE_LABELS[v] || v}</span>
                 <span>{scores[v] || 0}</span>
               </div>
               <div className="w-full h-4 rounded-full border-2 border-foreground bg-muted overflow-hidden">
