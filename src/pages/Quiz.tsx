@@ -83,8 +83,8 @@ const Quiz = () => {
             exit={{ opacity: 0, x: -40 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="doodle-card p-6 sm:p-8 mb-6">
-             <h2 className="font-display text-base sm:text-lg font-bold text-foreground leading-snug">
+            <div className="doodle-card p-6 sm:p-8 mb-6 border-secondary">
+             <h2 className="font-display text-base sm:text-lg font-bold text-secondary leading-snug">
                 {q.text}
               </h2>
             </div>
