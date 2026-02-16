@@ -35,7 +35,7 @@ const Index = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="text-center max-w-md relative z-10 shadow-none border-inherit rounded-none">
+        className="text-center max-w-md relative z-10">
 
         <motion.div
           initial={{ scale: 0 }}
@@ -46,17 +46,17 @@ const Index = () => {
           🎭
         </motion.div>
 
-        <h1 className="text-5xl sm:text-6xl font-display font-extrabold mb-3 leading-tight text-accent">
+        <h1 className="text-5xl sm:text-6xl font-display font-extrabold text-foreground mb-3 leading-tight">
           True<span className="text-primary">Self</span>
         </h1>
 
         <DoodleZigzag className="w-48 mx-auto text-primary mb-6" />
 
-        <p className="text-lg text-muted-foreground font-semibold mb-2">To find your personality
- Please don't be fake.<span className="squiggle-underline">really</span> are.
+        <p className="text-lg text-muted-foreground font-semibold mb-2">To find your personality Please don't be fake.really are.
+          <span className="squiggle-underline">really</span> are.
         </p>
         <p className="text-sm text-muted-foreground mb-10">
-          20 questions. 5 phases. 1 truth.
+          20 questions. 5 dimensions. 1 truth.
         </p>
 
         <motion.button
@@ -68,8 +68,8 @@ const Index = () => {
           ✏️ Start Test
         </motion.button>
 
-        <p className="mt-8 text-xs bg-inherit text-center font-bold text-doodle-green">
-          Takes about 4 minutes • 100% anonymous
+        <p className="mt-8 text-xs text-muted-foreground">
+          Takes about 3 minutes • 100% anonymous
         </p>
       </motion.div>
     </div>);
