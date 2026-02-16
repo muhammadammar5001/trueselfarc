@@ -120,24 +120,46 @@ const Results = () => {
             className="text-center max-w-sm"
           >
             <div className="doodle-card p-8">
-              <div className="text-5xl mb-4">🔒</div>
-              <h2 className="font-display text-3xl font-bold text-foreground mb-2">
-                Your Profile is Ready!
-              </h2>
-              <p className="text-muted-foreground font-semibold mb-6">
-                We've mapped your personality across 5 dimensions. Unlock your full result card.
-              </p>
-              <motion.button
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.96 }}
-                onClick={handleUnlock}
-                className="doodle-button bg-primary text-primary-foreground px-8 py-4 text-xl w-full rounded-lg mb-3"
-              >
-                🎉 Unlock for $1.49
-              </motion.button>
-              <p className="text-xs text-muted-foreground">
-                One-time payment • Instant access
-              </p>
+              {/* Teaser preview */}
+              <div className="text-center mb-4">
+                <div className="text-5xl mb-2">{archetype.emoji}</div>
+                <h2 className="font-serif text-3xl font-bold text-foreground italic leading-tight">
+                  "{archetype.name}"
+                </h2>
+                <p className="text-sm text-muted-foreground mt-2 font-semibold">
+                  {archetype.description.slice(0, 80)}...
+                </p>
+              </div>
+
+              {/* Blurred preview */}
+              <div className="relative mb-6 overflow-hidden rounded-lg">
+                <div className="blur-md select-none pointer-events-none p-4 bg-muted/50 space-y-2">
+                  <div className="h-3 bg-foreground/20 rounded w-full" />
+                  <div className="h-3 bg-foreground/20 rounded w-4/5" />
+                  <div className="h-3 bg-foreground/20 rounded w-3/4" />
+                  <div className="h-4 bg-primary/30 rounded w-1/2 mt-3" />
+                  <div className="h-3 bg-foreground/20 rounded w-full" />
+                  <div className="h-3 bg-foreground/20 rounded w-2/3" />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-card" />
+              </div>
+
+              <div className="text-center">
+                <p className="text-xs text-muted-foreground mb-4 font-semibold">
+                  Your full 5-dimension breakdown is ready
+                </p>
+                <motion.button
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.96 }}
+                  onClick={handleUnlock}
+                  className="doodle-button bg-primary text-primary-foreground px-8 py-4 text-xl w-full rounded-lg mb-3"
+                >
+                  🔓 Unlock for $1.49
+                </motion.button>
+                <p className="text-xs text-muted-foreground">
+                  One-time payment • Instant access
+                </p>
+              </div>
             </div>
           </motion.div>
         )}

@@ -13,6 +13,10 @@ const Quiz = () => {
   const q = questions[current];
   const progress = ((current) / questions.length) * 100;
 
+  const handleBack = () => {
+    if (current > 0) setCurrent(current - 1);
+  };
+
   const handleAnswer = (optionScores: Record<string, number>) => {
     const newScores = { ...scores };
     Object.entries(optionScores).forEach(([key, val]) => {
@@ -40,7 +44,18 @@ const Quiz = () => {
       <div className="w-full max-w-lg">
         {/* Progress */}
         <div className="mb-2 flex items-center justify-between text-sm font-bold text-muted-foreground">
-          <span>Question {current + 1}/{questions.length}</span>
+          <div className="flex items-center gap-3">
+            {current > 0 && (
+              <button
+                onClick={handleBack}
+                className="text-foreground hover:text-primary transition-colors text-lg"
+                aria-label="Go back"
+              >
+                ←
+              </button>
+            )}
+            <span>Question {current + 1}/{questions.length}</span>
+          </div>
           <span>{Math.round(progress)}%</span>
         </div>
         <div className="w-full h-4 rounded-full border-2 border-foreground bg-muted mb-8 overflow-hidden">

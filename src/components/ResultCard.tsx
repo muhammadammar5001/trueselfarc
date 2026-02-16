@@ -26,7 +26,7 @@ const ResultCard = forwardRef<HTMLDivElement, ResultCardProps>(
         {/* Header */}
         <div className="text-center mb-5">
           <div className="text-5xl mb-2">{archetype.emoji}</div>
-          <h2 className="font-display text-3xl font-extrabold text-foreground leading-tight">
+          <h2 className="font-serif text-3xl font-extrabold text-foreground leading-tight italic">
             {archetype.name}
           </h2>
           <p className="text-sm text-muted-foreground mt-2 font-semibold">

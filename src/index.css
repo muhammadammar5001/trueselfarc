@@ -2,52 +2,52 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800;900&family=Nunito:wght@400;600;700;800&family=Baloo+2:wght@500;600;700;800&display=swap');
 
 @layer base {
   :root {
-    --background: 45 50% 96%;
-    --foreground: 240 20% 20%;
+    --background: 36 27% 92%;
+    --foreground: 0 0% 10%;
 
-    --card: 45 40% 98%;
-    --card-foreground: 240 20% 20%;
+    --card: 36 22% 95%;
+    --card-foreground: 0 0% 10%;
 
-    --popover: 45 40% 98%;
-    --popover-foreground: 240 20% 20%;
+    --popover: 36 22% 95%;
+    --popover-foreground: 0 0% 10%;
 
-    --primary: 350 80% 60%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 14 87% 38%;
+    --primary-foreground: 36 27% 95%;
 
-    --secondary: 200 75% 55%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 150 35% 18%;
+    --secondary-foreground: 36 27% 95%;
 
-    --muted: 45 30% 90%;
-    --muted-foreground: 240 10% 45%;
+    --muted: 36 18% 86%;
+    --muted-foreground: 0 0% 35%;
 
-    --accent: 45 90% 60%;
-    --accent-foreground: 240 20% 20%;
+    --accent: 150 35% 18%;
+    --accent-foreground: 36 27% 95%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 84% 45%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 240 15% 75%;
-    --input: 240 15% 80%;
-    --ring: 350 80% 60%;
+    --border: 0 0% 72%;
+    --input: 0 0% 78%;
+    --ring: 14 87% 38%;
 
     --radius: 1rem;
 
-    --doodle-green: 145 60% 48%;
-    --doodle-purple: 270 60% 60%;
-    --doodle-orange: 25 90% 58%;
+    --doodle-green: 150 35% 28%;
+    --doodle-purple: 150 25% 40%;
+    --doodle-orange: 14 70% 48%;
 
-    --sidebar-background: 45 40% 95%;
-    --sidebar-foreground: 240 20% 20%;
-    --sidebar-primary: 350 80% 60%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 45 30% 88%;
-    --sidebar-accent-foreground: 240 20% 20%;
-    --sidebar-border: 240 15% 75%;
-    --sidebar-ring: 350 80% 60%;
+    --sidebar-background: 36 22% 90%;
+    --sidebar-foreground: 0 0% 10%;
+    --sidebar-primary: 14 87% 38%;
+    --sidebar-primary-foreground: 36 27% 95%;
+    --sidebar-accent: 36 18% 84%;
+    --sidebar-accent-foreground: 0 0% 10%;
+    --sidebar-border: 0 0% 72%;
+    --sidebar-ring: 14 87% 38%;
   }
 }
 
