@@ -1,23 +1,23 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
-const DoodleStar = ({ className, style }: { className?: string; style?: React.CSSProperties }) => (
-  <svg className={className} style={style} viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+const DoodleStar = ({ className, style }: {className?: string;style?: React.CSSProperties;}) =>
+<svg className={className} style={style} viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
     <path d="M20 4 L23 15 L35 15 L25 22 L28 34 L20 26 L12 34 L15 22 L5 15 L17 15 Z" />
-  </svg>
-);
+  </svg>;
 
-const DoodleCircle = ({ className, style }: { className?: string; style?: React.CSSProperties }) => (
-  <svg className={className} style={style} viewBox="0 0 50 50" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+
+const DoodleCircle = ({ className, style }: {className?: string;style?: React.CSSProperties;}) =>
+<svg className={className} style={style} viewBox="0 0 50 50" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
     <circle cx="25" cy="25" r="20" strokeDasharray="5 5" />
-  </svg>
-);
+  </svg>;
 
-const DoodleZigzag = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+
+const DoodleZigzag = ({ className }: {className?: string;}) =>
+<svg className={className} viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
     <polyline points="0,15 12,5 24,15 36,5 48,15 60,5 72,15 84,5 100,15" />
-  </svg>
-);
+  </svg>;
+
 
 const Index = () => {
   const navigate = useNavigate();
@@ -35,45 +35,45 @@ const Index = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="text-center max-w-md relative z-10"
-      >
+        className="text-center max-w-md relative z-10 shadow-none border-inherit rounded-none">
+
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-          className="text-7xl mb-6"
-        >
+          className="text-7xl mb-6">
+
           🎭
         </motion.div>
 
-        <h1 className="text-5xl sm:text-6xl font-display font-extrabold text-foreground mb-3 leading-tight">
+        <h1 className="text-5xl sm:text-6xl font-display font-extrabold mb-3 leading-tight text-accent">
           True<span className="text-primary">Self</span>
         </h1>
 
         <DoodleZigzag className="w-48 mx-auto text-primary mb-6" />
 
-        <p className="text-lg text-muted-foreground font-semibold mb-2">
-          Discover who you <span className="squiggle-underline">really</span> are.
+        <p className="text-lg text-muted-foreground font-semibold mb-2">To find your personality
+ Please don't be fake.<span className="squiggle-underline">really</span> are.
         </p>
         <p className="text-sm text-muted-foreground mb-10">
-          20 questions. 5 dimensions. 1 truth.
+          20 questions. 5 phases. 1 truth.
         </p>
 
         <motion.button
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.96 }}
           onClick={() => navigate("/quiz")}
-          className="doodle-button bg-primary text-primary-foreground px-10 py-4 text-xl rounded-lg"
-        >
+          className="doodle-button bg-primary text-primary-foreground px-10 py-4 text-xl rounded-lg">
+
           ✏️ Start Test
         </motion.button>
 
-        <p className="mt-8 text-xs text-muted-foreground">
-          Takes about 3 minutes • 100% anonymous
+        <p className="mt-8 text-xs bg-inherit text-center font-serif font-bold text-doodle-green">
+          Takes about 4 minutes • 100% anonymous
         </p>
       </motion.div>
-    </div>
-  );
+    </div>);
+
 };
 
 export default Index;
