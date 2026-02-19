@@ -14,12 +14,13 @@ function getRarityTier(rarity: string): { color: string; label: string } {
   return { color: "bg-rarity-noteworthy text-foreground", label: rarity };
 }
 
-function getBarColor(percentage: number): string {
-  if (percentage >= 80) return "bg-secondary";
-  if (percentage >= 60) return "bg-secondary/80";
-  if (percentage >= 40) return "bg-secondary/60";
-  if (percentage >= 20) return "bg-secondary/40";
-  return "bg-secondary/25";
+function getBarStyle(percentage: number): React.CSSProperties {
+  // Interpolate from forest green (#2D5F2D) to rust (#B7410E)
+  const t = Math.min(percentage / 100, 1);
+  const r = Math.round(45 + t * (183 - 45));
+  const g = Math.round(95 + t * (65 - 95));
+  const b = Math.round(45 + t * (14 - 45));
+  return { backgroundColor: `rgb(${r}, ${g}, ${b})`, width: `${percentage}%` };
 }
 
 const ResultCard = forwardRef<HTMLDivElement, ResultCardProps>(
@@ -68,8 +69,8 @@ const ResultCard = forwardRef<HTMLDivElement, ResultCardProps>(
                 </div>
                 <div className="w-full h-4 rounded-full border-2 border-foreground bg-muted overflow-hidden">
                   <div
-                    className={`h-full rounded-full transition-all ${getBarColor(percentage)}`}
-                    style={{ width: `${percentage}%` }}
+                    className="h-full rounded-full transition-all"
+                    style={getBarStyle(percentage)}
                   />
                 </div>
               </div>

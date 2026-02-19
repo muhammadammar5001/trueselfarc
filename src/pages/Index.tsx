@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { captureReferral } from "@/lib/referral";
 
 const DoodleStar = ({ className, style }: {className?: string;style?: React.CSSProperties;}) =>
 <svg className={className} style={style} viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -21,6 +23,8 @@ const DoodleZigzag = ({ className }: {className?: string;}) =>
 
 const Index = () => {
   const navigate = useNavigate();
+
+  useEffect(() => { captureReferral(); }, []);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-background px-4 overflow-hidden relative">

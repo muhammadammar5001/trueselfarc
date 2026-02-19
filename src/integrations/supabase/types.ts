@@ -14,13 +14,75 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      referral_visits: {
+        Row: {
+          id: string
+          paid: boolean
+          paid_at: string | null
+          referral_code: string
+          visited_at: string
+          visitor_id: string
+        }
+        Insert: {
+          id?: string
+          paid?: boolean
+          paid_at?: string | null
+          referral_code: string
+          visited_at?: string
+          visitor_id: string
+        }
+        Update: {
+          id?: string
+          paid?: boolean
+          paid_at?: string | null
+          referral_code?: string
+          visited_at?: string
+          visitor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "referral_visits_referral_code_fkey"
+            columns: ["referral_code"]
+            isOneToOne: false
+            referencedRelation: "referrals"
+            referencedColumns: ["referral_code"]
+          },
+        ]
+      }
+      referrals: {
+        Row: {
+          click_count: number
+          created_at: string
+          id: string
+          paid_count: number
+          referral_code: string
+          referrer_name: string
+        }
+        Insert: {
+          click_count?: number
+          created_at?: string
+          id?: string
+          paid_count?: number
+          referral_code: string
+          referrer_name: string
+        }
+        Update: {
+          click_count?: number
+          created_at?: string
+          id?: string
+          paid_count?: number
+          referral_code?: string
+          referrer_name?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      increment_referral_clicks: { Args: { code: string }; Returns: undefined }
+      increment_referral_paid: { Args: { code: string }; Returns: undefined }
     }
     Enums: {
       [_ in never]: never

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import html2canvas from "html2canvas";
 import { supabase } from "@/integrations/supabase/client";
 import { getArchetype, VARIABLES } from "@/lib/quizData";
+import { markReferralPaid } from "@/lib/referral";
 import ResultCard from "@/components/ResultCard";
 import ReportView from "@/components/ReportView";
 
@@ -74,6 +75,8 @@ const Results = () => {
   const handleUnlock = async () => {
     // Mock payment — in production, this would verify Lemon Squeezy / Stripe payment
     setPhase("result");
+    // Track referral conversion
+    markReferralPaid();
     setReportLoading(true);
     try {
       const { data, error } = await supabase.functions.invoke("generate-report", {

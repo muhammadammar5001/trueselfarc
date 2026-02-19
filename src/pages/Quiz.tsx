@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { questions, VARIABLES } from "@/lib/quizData";
+import QuizDoodles from "@/components/QuizDoodles";
 
 const Quiz = () => {
   const navigate = useNavigate();
@@ -40,8 +41,9 @@ const Quiz = () => {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-background px-4 py-8">
-      <div className="w-full max-w-lg">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-background px-4 py-8 relative overflow-hidden">
+      <QuizDoodles />
+      <div className="w-full max-w-lg relative z-10">
         {/* Progress */}
         <div className="mb-2 flex items-center justify-between text-sm font-bold text-muted-foreground">
           <div className="flex items-center gap-3">
