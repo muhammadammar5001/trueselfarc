@@ -5,6 +5,7 @@ import html2canvas from "html2canvas";
 import { supabase } from "@/integrations/supabase/client";
 import { getArchetype, VARIABLES } from "@/lib/quizData";
 import ResultCard from "@/components/ResultCard";
+import ReportView from "@/components/ReportView";
 
 type Phase = "calculating" | "paywall" | "result";
 
@@ -19,6 +20,8 @@ const Results = () => {
   const [phase, setPhase] = useState<Phase>("calculating");
   const [aiText, setAiText] = useState<string>("");
   const [aiLoading, setAiLoading] = useState(true);
+  const [reportSections, setReportSections] = useState<{ title: string; content: string }[]>([]);
+  const [reportLoading, setReportLoading] = useState(false);
 
   // Split AI text into teaser (first ~12 words) and hidden rest
   const words = aiText.split(" ");
@@ -68,8 +71,21 @@ const Results = () => {
     }
   }, [phase, aiLoading]);
 
-  const handleUnlock = () => {
+  const handleUnlock = async () => {
+    // Mock payment — in production, this would verify Lemon Squeezy / Stripe payment
     setPhase("result");
+    setReportLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("generate-report", {
+        body: { archetype, scores },
+      });
+      if (error) throw error;
+      setReportSections(data?.sections || []);
+    } catch (err) {
+      console.error("Report generation failed:", err);
+    } finally {
+      setReportLoading(false);
+    }
   };
 
   const handleShare = async () => {
@@ -239,6 +255,29 @@ const Results = () => {
               ) : (
                 <p className="text-sm text-foreground leading-relaxed">{aiText}</p>
               )}
+            </div>
+
+            {/* 15-Section Report */}
+            <div className="mt-4">
+              <h3 className="font-bold text-foreground text-lg mb-3 text-center">
+                📖 Your Full Personality Report
+              </h3>
+              {reportLoading ? (
+                <div className="doodle-card p-6 bg-card text-center">
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
+                    className="text-4xl mb-3 inline-block"
+                  >
+                    🧠
+                  </motion.div>
+                  <p className="text-sm text-muted-foreground font-semibold">
+                    Generating your 15-section report...
+                  </p>
+                </div>
+              ) : reportSections.length > 0 ? (
+                <ReportView sections={reportSections} />
+              ) : null}
             </div>
 
             <div className="mt-6 space-y-3">
