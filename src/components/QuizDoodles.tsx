@@ -62,12 +62,12 @@ const AtomDoodle = ({ className, style }: { className?: string; style?: React.CS
 );
 
 const doodleComponents = [
-  { Component: BrainDoodle, positions: "top-8 left-4 sm:left-8", size: "w-12 h-12 sm:w-14 sm:h-14", delay: 0 },
-  { Component: ThoughtBubble, positions: "top-16 right-4 sm:right-10", size: "w-10 h-10 sm:w-12 sm:h-12", delay: 1.2 },
-  { Component: LightbulbDoodle, positions: "bottom-24 left-6 sm:left-12", size: "w-8 h-10 sm:w-10 sm:h-12", delay: 0.6 },
-  { Component: SpiralDoodle, positions: "top-1/3 right-2 sm:right-6", size: "w-10 h-10 sm:w-12 sm:h-12", delay: 2.0 },
-  { Component: HeartBrainDoodle, positions: "bottom-16 right-6 sm:right-14", size: "w-14 h-10 sm:w-16 sm:h-12", delay: 1.5 },
-  { Component: AtomDoodle, positions: "bottom-1/3 left-2 sm:left-6", size: "w-10 h-10 sm:w-12 sm:h-12", delay: 0.8 },
+  { Component: BrainDoodle, positions: "top-8 left-4 sm:left-8", size: "w-14 h-14 sm:w-16 sm:h-16", delay: 0 },
+  { Component: ThoughtBubble, positions: "top-16 right-4 sm:right-10", size: "w-12 h-12 sm:w-14 sm:h-14", delay: 1.2 },
+  { Component: LightbulbDoodle, positions: "bottom-24 left-6 sm:left-12", size: "w-10 h-12 sm:w-12 sm:h-14", delay: 0.6 },
+  { Component: SpiralDoodle, positions: "top-1/3 right-2 sm:right-6", size: "w-12 h-12 sm:w-14 sm:h-14", delay: 2.0 },
+  { Component: HeartBrainDoodle, positions: "bottom-16 right-6 sm:right-14", size: "w-16 h-12 sm:w-18 sm:h-14", delay: 1.5 },
+  { Component: AtomDoodle, positions: "bottom-1/3 left-2 sm:left-6", size: "w-12 h-12 sm:w-14 sm:h-14", delay: 0.8 },
 ];
 
 const QuizDoodles = () => (
@@ -78,7 +78,7 @@ const QuizDoodles = () => (
         className={`absolute ${positions} pointer-events-none`}
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{
-          opacity: [0, 0.25, 0.4, 0.25],
+          opacity: [0, 0.4, 0.6, 0.4],
           scale: [0.8, 1, 1.05, 0.95, 1],
           y: [0, -8, 0, 6, 0],
           rotate: [0, 3, -2, 1, 0],
@@ -90,7 +90,7 @@ const QuizDoodles = () => (
           ease: "easeInOut",
         }}
       >
-        <Component className={`${size} text-muted-foreground`} />
+        <Component className={`${size}`} style={{ color: '#B7410E' }} />
       </motion.div>
     ))}
   </>

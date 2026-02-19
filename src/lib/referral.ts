@@ -23,22 +23,12 @@ export async function captureReferral() {
 
   const visitorId = getOrCreateVisitorId();
 
-  // Check if this visitor already visited via this code
-  const { data: existing } = await supabase
-    .from("referral_visits")
-    .select("id")
-    .eq("referral_code", ref)
-    .eq("visitor_id", visitorId)
-    .maybeSingle();
-
-  if (!existing) {
-    // Track new visit
-    await supabase.from("referral_visits").insert({
-      referral_code: ref,
-      visitor_id: visitorId,
+  try {
+    await supabase.functions.invoke("track-referral", {
+      body: { action: "visit", referral_code: ref, visitor_id: visitorId },
     });
-    // Increment click count
-    await supabase.rpc("increment_referral_clicks", { code: ref });
+  } catch (e) {
+    console.error("Referral tracking error:", e);
   }
 }
 
@@ -49,14 +39,13 @@ export async function markReferralPaid() {
 
   const visitorId = getOrCreateVisitorId();
 
-  await supabase
-    .from("referral_visits")
-    .update({ paid: true, paid_at: new Date().toISOString() })
-    .eq("referral_code", ref)
-    .eq("visitor_id", visitorId);
-
-  // Increment paid count
-  await supabase.rpc("increment_referral_paid", { code: ref });
+  try {
+    await supabase.functions.invoke("track-referral", {
+      body: { action: "paid", referral_code: ref, visitor_id: visitorId },
+    });
+  } catch (e) {
+    console.error("Referral paid tracking error:", e);
+  }
 }
 
 /** Get stored referral code */
