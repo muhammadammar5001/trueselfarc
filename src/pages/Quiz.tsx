@@ -69,7 +69,7 @@ const Quiz = () => {
                 ←
               </button>
             )}
-            <span>Question {current + 1}/{questions.length}</span>
+            <span>Question {current + 1}/{shuffledQuestions.length}</span>
           </div>
           <span>{Math.round(progress)}%</span>
         </div>
