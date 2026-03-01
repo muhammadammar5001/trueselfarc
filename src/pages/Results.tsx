@@ -87,6 +87,8 @@ const Results = () => {
       });
       if (error) throw error;
       setReportSections(data?.sections || []);
+      setReportDimensions(data?.dimensions || []);
+      setPowerArchetype(data?.powerArchetype || "");
     } catch (err) {
       console.error("Report generation failed:", err);
     } finally {
