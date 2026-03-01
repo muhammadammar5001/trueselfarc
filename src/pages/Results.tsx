@@ -23,6 +23,8 @@ const Results = () => {
   const [aiText, setAiText] = useState<string>("");
   const [aiLoading, setAiLoading] = useState(true);
   const [reportSections, setReportSections] = useState<{ title: string; content: string }[]>([]);
+  const [reportDimensions, setReportDimensions] = useState<{ key: string; label: string; coreTruth: string; superpower: string; blindSpot: string }[]>([]);
+  const [powerArchetype, setPowerArchetype] = useState<string>("");
   const [reportLoading, setReportLoading] = useState(false);
 
   // Split AI text into teaser (first ~12 words) and hidden rest
