@@ -1,8 +1,17 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { questions, VARIABLES } from "@/lib/quizData";
 import QuizDoodles from "@/components/QuizDoodles";
+
+function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
 
 const Quiz = () => {
   const navigate = useNavigate();
@@ -11,8 +20,13 @@ const Quiz = () => {
     Object.fromEntries(VARIABLES.map((v) => [v, 0]))
   );
 
-  const q = questions[current];
-  const progress = ((current) / questions.length) * 100;
+  const shuffledQuestions = useMemo(
+    () => shuffle(questions).map((q) => ({ ...q, options: shuffle(q.options) })),
+    []
+  );
+
+  const q = shuffledQuestions[current];
+  const progress = (current / shuffledQuestions.length) * 100;
 
   const handleBack = () => {
     if (current > 0) setCurrent(current - 1);
@@ -25,10 +39,9 @@ const Quiz = () => {
     });
     setScores(newScores);
 
-    if (current < questions.length - 1) {
+    if (current < shuffledQuestions.length - 1) {
       setCurrent(current + 1);
     } else {
-      // Navigate to results with scores
       navigate("/results", { state: { scores: newScores } });
     }
   };
@@ -56,7 +69,7 @@ const Quiz = () => {
                 ←
               </button>
             )}
-            <span>Question {current + 1}/{questions.length}</span>
+            <span>Question {current + 1}/{shuffledQuestions.length}</span>
           </div>
           <span>{Math.round(progress)}%</span>
         </div>
