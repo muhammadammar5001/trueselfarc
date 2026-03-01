@@ -20,10 +20,14 @@ const Quiz = () => {
     Object.fromEntries(VARIABLES.map((v) => [v, 0]))
   );
 
-  const shuffledQuestions = useMemo(
-    () => shuffle(questions).map((q) => ({ ...q, options: shuffle(q.options) })),
-    []
-  );
+  const phaseOrder = ["The Scenarios", "The Inner World", "The Hard Choices", "Abstract & Synthesis"];
+
+  const shuffledQuestions = useMemo(() => {
+    const grouped = phaseOrder.map((phase) =>
+      shuffle(questions.filter((q) => q.phase === phase)).map((q) => ({ ...q, options: shuffle(q.options) }))
+    );
+    return grouped.flat();
+  }, []);
 
   const q = shuffledQuestions[current];
   const progress = (current / shuffledQuestions.length) * 100;
