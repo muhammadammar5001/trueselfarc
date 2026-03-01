@@ -7,6 +7,7 @@ import { getArchetype, VARIABLES } from "@/lib/quizData";
 import { markReferralPaid } from "@/lib/referral";
 import ResultCard from "@/components/ResultCard";
 import ReportView from "@/components/ReportView";
+import RadarChartDisplay from "@/components/RadarChart";
 
 type Phase = "calculating" | "paywall" | "result";
 
@@ -22,6 +23,8 @@ const Results = () => {
   const [aiText, setAiText] = useState<string>("");
   const [aiLoading, setAiLoading] = useState(true);
   const [reportSections, setReportSections] = useState<{ title: string; content: string }[]>([]);
+  const [reportDimensions, setReportDimensions] = useState<{ key: string; label: string; coreTruth: string; superpower: string; blindSpot: string }[]>([]);
+  const [powerArchetype, setPowerArchetype] = useState<string>("");
   const [reportLoading, setReportLoading] = useState(false);
 
   // Split AI text into teaser (first ~12 words) and hidden rest
@@ -84,6 +87,8 @@ const Results = () => {
       });
       if (error) throw error;
       setReportSections(data?.sections || []);
+      setReportDimensions(data?.dimensions || []);
+      setPowerArchetype(data?.powerArchetype || "");
     } catch (err) {
       console.error("Report generation failed:", err);
     } finally {
@@ -241,6 +246,7 @@ const Results = () => {
             transition={{ duration: 0.5 }}
             className="w-full max-w-sm"
           >
+            <RadarChartDisplay scores={scores} />
             <ResultCard ref={cardRef} archetype={archetype} scores={scores} />
 
             {/* AI-generated roast & cheer */}
@@ -279,7 +285,7 @@ const Results = () => {
                   </p>
                 </div>
               ) : reportSections.length > 0 ? (
-                <ReportView sections={reportSections} />
+                <ReportView sections={reportSections} dimensions={reportDimensions} powerArchetype={powerArchetype} />
               ) : null}
             </div>
 
