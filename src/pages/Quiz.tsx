@@ -20,8 +20,13 @@ const Quiz = () => {
     Object.fromEntries(VARIABLES.map((v) => [v, 0]))
   );
 
-  const q = questions[current];
-  const progress = ((current) / questions.length) * 100;
+  const shuffledQuestions = useMemo(
+    () => shuffle(questions).map((q) => ({ ...q, options: shuffle(q.options) })),
+    []
+  );
+
+  const q = shuffledQuestions[current];
+  const progress = (current / shuffledQuestions.length) * 100;
 
   const handleBack = () => {
     if (current > 0) setCurrent(current - 1);
