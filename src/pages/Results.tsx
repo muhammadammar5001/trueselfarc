@@ -246,6 +246,7 @@ const Results = () => {
             transition={{ duration: 0.5 }}
             className="w-full max-w-sm"
           >
+            <RadarChartDisplay scores={scores} />
             <ResultCard ref={cardRef} archetype={archetype} scores={scores} />
 
             {/* AI-generated roast & cheer */}
@@ -284,7 +285,7 @@ const Results = () => {
                   </p>
                 </div>
               ) : reportSections.length > 0 ? (
-                <ReportView sections={reportSections} />
+                <ReportView sections={reportSections} dimensions={reportDimensions} powerArchetype={powerArchetype} />
               ) : null}
             </div>
 
