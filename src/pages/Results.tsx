@@ -7,6 +7,7 @@ import { getArchetype, VARIABLES } from "@/lib/quizData";
 import { markReferralPaid } from "@/lib/referral";
 import ResultCard from "@/components/ResultCard";
 import ReportView from "@/components/ReportView";
+import RadarChartDisplay from "@/components/RadarChart";
 
 type Phase = "calculating" | "paywall" | "result";
 
