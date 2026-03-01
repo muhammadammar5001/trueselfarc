@@ -39,10 +39,9 @@ const Quiz = () => {
     });
     setScores(newScores);
 
-    if (current < questions.length - 1) {
+    if (current < shuffledQuestions.length - 1) {
       setCurrent(current + 1);
     } else {
-      // Navigate to results with scores
       navigate("/results", { state: { scores: newScores } });
     }
   };
